@@ -11,13 +11,16 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Provider, useSelector } from 'react-redux';
+import store from './src/redux/store';
 
 function App(): React.JSX.Element {
-  
   return (
-    <View style={styles.container}>
-      <Text>Hello, World</Text>
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <Text>Hello, World</Text>
+      </View>
+    </Provider>
   )
 }
 
