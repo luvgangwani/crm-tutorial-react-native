@@ -1,4 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const init = createAsyncThunk('init', async () => {
+    const response = await fetch('http://localhost:3000/contact')
+    return response.json()
+})
 
 export const contactsSlice = createSlice({
     name: 'contacts',
@@ -14,19 +19,27 @@ export const contactsSlice = createSlice({
         project: '',
         notes: '',
         toUpdate: false,
+        isLoading: false,
+        error: false,
     },
     reducers: {
-        init: (state, _action) => {
-            fetch('http://localhost:3000/contacts')
-            .then(response => response.json())
-            .then(people => {
-                state.people = people
-            })
-            .catch(error => console.error(error))
-        },
         update: (state, action) => {
             state.people = action.payload
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(init.pending, (state) => {
+            state.isLoading = true
+        })
+
+        builder.addCase(init.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.people = action.payload
+        })
+
+        builder.addCase(init.rejected, (state) => {
+            state.error = true
+        })
     }
 })
 

@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contactsReducer from './contacts'
 
-export default configureStore({
+const store = configureStore({
     reducer: {
         contacts: contactsReducer
     }
 })
+
+
+export type AppDispatch = typeof store.dispatch
+export default store

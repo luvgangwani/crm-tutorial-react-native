@@ -1,16 +1,32 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { FlatList, StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { init } from '../redux/contacts'
+import { Contact, ContactState } from '../types'
+import PeopleItem from './PeopleItem'
+import { AppDispatch } from '../redux/store'
 
 function PeopleList() {
+  const dispatch = useDispatch<AppDispatch>()
+  const people = useSelector((state: ContactState) => state.contacts.people)
+
+  useEffect(() => {
+    dispatch(init())
+  }, [])
   return (
-    <View>
-        <Text>PeopleList</Text>
-    </View>
+    <FlatList
+      style={styles.container}
+      data={people}
+      renderItem={({ item }) => <PeopleItem people={item} />}
+      keyExtractor={(_item, index) => index.toString()}
+    />
   )
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    padding: 80
+  }
 })
 
 export default PeopleList
