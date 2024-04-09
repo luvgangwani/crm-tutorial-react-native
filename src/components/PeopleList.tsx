@@ -25,7 +25,8 @@ function PeopleList() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 80
+    paddingHorizontal: 20,
+    paddingVertical: 40,
   }
 })
 
