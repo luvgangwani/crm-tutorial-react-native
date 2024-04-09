@@ -24,7 +24,10 @@ export const contactsSlice = createSlice({
     },
     reducers: {
         update: (state, action) => {
-            state.people = action.payload
+            state = {
+                ...state,
+                ...action.payload
+            }
         }
     },
     extraReducers: (builder) => {

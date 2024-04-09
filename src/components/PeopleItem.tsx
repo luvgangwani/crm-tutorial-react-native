@@ -1,14 +1,27 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { PeopleItemProps } from '../types'
-
-function handlePeopleItemClick() {
-  
-}
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../redux/store'
+import { update } from '../redux/contacts'
 
 function PeopleItem({ people }: PeopleItemProps) {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const handlePeopleItemPress = () => {
+    dispatch(update({
+      detailView: true,
+      firstName: people.firstName,
+      lastName: people.lastName,
+      company: people.company,
+      email: people.email,
+      project: people.project,
+      phone: people.phone,
+      notes: people.notes,
+    }))
+  }
   return (
-    <TouchableOpacity onPress={ handlePeopleItemClick } style={styles.container}>
+    <TouchableOpacity onPress={ handlePeopleItemPress } style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.titleText}>{people.firstName} {people.lastName}</Text>
         </View>
