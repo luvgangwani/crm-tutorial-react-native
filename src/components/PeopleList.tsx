@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { init } from '../redux/contacts'
-import { Contact, ContactState } from '../types'
+import { ContactState } from '../types'
 import PeopleItem from './PeopleItem'
 import { AppDispatch } from '../redux/store'
 

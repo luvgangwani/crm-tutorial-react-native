@@ -2,10 +2,16 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { PeopleItemProps } from '../types'
 
+function handlePeopleItemClick() {
+  
+}
+
 function PeopleItem({ people }: PeopleItemProps) {
   return (
-    <TouchableOpacity onPress={() => {}} style={styles.container}>
-        <Text style={styles.title}>{people.firstName} {people.lastName}</Text>
+    <TouchableOpacity onPress={ handlePeopleItemClick } style={styles.container}>
+        <View style={styles.title}>
+          <Text style={styles.titleText}>{people.firstName} {people.lastName}</Text>
+        </View>
         <View style={styles.company}>
           <Text style={styles.companyText}>{people.company}</Text>
         </View>
@@ -20,13 +26,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderRadius: 10,
     borderColor: '#967bb6',
-    rowGap: 10,
+    rowGap: 20,
+    marginBottom: 20
   },
 
   title: {
+    paddingHorizontal: 5,
+    justifyContent: 'center',
+  },
+
+  titleText: {
     fontSize: 18,
     color: '#967bb6',
-    paddingHorizontal: 5,
   },
 
   company: {
