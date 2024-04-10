@@ -28,6 +28,8 @@ export const contactsSlice = createSlice({
                 ...state,
                 ...action.payload
             }
+
+            return state
         }
     },
     extraReducers: (builder) => {
