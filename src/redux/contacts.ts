@@ -1,8 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Contact, People } from "../types";
 
 export const init = createAsyncThunk('init', async () => {
     const response = await fetch('http://localhost:3000/contact')
     return response.json()
+})
+
+export const add = createAsyncThunk('add', async (people: People) => {
+    await fetch('http://localhost:3000/contact', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(people)
+    })
+
+    return people
 })
 
 export const contactsSlice = createSlice({
@@ -21,7 +35,7 @@ export const contactsSlice = createSlice({
         toUpdate: false,
         isLoading: false,
         error: false,
-    },
+    } as Contact,
     reducers: {
         update: (state, action) => {
             state = {
@@ -43,6 +57,18 @@ export const contactsSlice = createSlice({
         })
 
         builder.addCase(init.rejected, (state) => {
+            state.error = true
+        })
+
+        builder.addCase(add.pending, (state) => {
+            state.isLoading = true
+        })
+
+        builder.addCase(add.fulfilled, (state, action) => {
+            state.people = [...state.people, action.payload]
+        })
+
+        builder.addCase(add.rejected, (state) => {
             state.error = true
         })
     }
