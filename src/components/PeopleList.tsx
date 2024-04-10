@@ -23,8 +23,6 @@ function PeopleList() {
     renderItem={({ item }) => <PeopleItem people={item} />}
     keyExtractor={(_item, index) => index.toString()}
   />
-
-    console.log(`Detail view: ${detailView}`)
     if (detailView) returnView = <PeopleDetail />
 
     return returnView
