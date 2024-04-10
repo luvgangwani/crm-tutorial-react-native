@@ -1,4 +1,5 @@
 export type People = {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -12,6 +13,7 @@ export type Contact = {
   people: Array<People>;
   detailView: boolean;
   personSelected: null;
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -33,6 +35,7 @@ export type ContactState = {
     people: Array<People>;
     detailView: boolean;
     personSelected: null;
+    id?: string,
     firstName: string;
     lastName: string;
     email: string;

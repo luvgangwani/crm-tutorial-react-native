@@ -3,28 +3,36 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { ContactState } from '../types'
 import { AppDispatch } from '../redux/store'
-import { update } from '../redux/contacts'
+import { deletePerson, update } from '../redux/contacts'
 
 function PeopleDetail() {
 
   const contacts = useSelector((state: ContactState) => state.contacts)
   const dispatch = useDispatch<AppDispatch>()
 
+  const resetState = {
+    detailView: false,
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    project: '',
+    company: '',
+    notes: '',
+  }
+
   const handlePeopleDetailClosePress = () => {
     dispatch(
-      update(
-        {
-          detailView: false,
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          project: '',
-          company: '',
-          notes: '',
-        }
-      )
+      update(resetState)
     )
+  }
+
+  const handleDeletePeoplePress = () => {
+    if (contacts.id) {
+      dispatch(deletePerson(contacts.id))
+      dispatch(update(resetState))
+    }
   }
 
   return (
@@ -56,6 +64,9 @@ function PeopleDetail() {
         <TouchableOpacity style={styles.close} onPress={ handlePeopleDetailClosePress }>
           <Text style={styles.closeText}>Close</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.delete} onPress={ handleDeletePeoplePress }>
+          <Text style={styles.deleteText}>Delete</Text>
+        </TouchableOpacity>
     </View>
   )
 }
@@ -86,6 +97,20 @@ const styles = StyleSheet.create({
 
   closeText: {
     color: '#967bb6',
+    fontSize: 18
+  },
+  
+  delete: {
+    borderWidth: 2,
+    borderColor: '#ff0000',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+
+  deleteText: {
+    color: '#ff0000',
     fontSize: 18
   }
 })

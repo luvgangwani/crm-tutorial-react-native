@@ -11,6 +11,7 @@ function PeopleItem({ people }: PeopleItemProps) {
   const handlePeopleItemPress = () => {
     dispatch(update({
       detailView: true,
+      id: people.id,
       firstName: people.firstName,
       lastName: people.lastName,
       company: people.company,

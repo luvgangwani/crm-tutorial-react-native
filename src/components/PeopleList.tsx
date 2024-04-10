@@ -14,7 +14,7 @@ function PeopleList() {
 
   useEffect(() => {
     dispatch(init())
-  }, [])
+  }, [people])
 
   const renderPeopleList = () => {
     let returnView = <FlatList

@@ -19,12 +19,23 @@ export const add = createAsyncThunk('add', async (people: People) => {
     return people
 })
 
+export const deletePerson = createAsyncThunk('deletePerson', async (id: string) => {
+    await fetch(`http://localhost:3000/contact/${id}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+})
+
 export const contactsSlice = createSlice({
     name: 'contacts',
     initialState: {
         people: [],
         detailView: false,
         personSelected: null,
+        id: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -65,10 +76,23 @@ export const contactsSlice = createSlice({
         })
 
         builder.addCase(add.fulfilled, (state, action) => {
+            state.isLoading = false
             state.people = [...state.people, action.payload]
         })
 
         builder.addCase(add.rejected, (state) => {
+            state.error = true
+        })
+
+        builder.addCase(deletePerson.pending, (state) => {
+            state.isLoading = true
+        })
+
+        builder.addCase(deletePerson.fulfilled, (state, _action) => {
+            state.isLoading = false
+        })
+
+        builder.addCase(deletePerson.rejected, (state) => {
             state.error = true
         })
     }
