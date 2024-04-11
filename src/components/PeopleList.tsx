@@ -6,15 +6,17 @@ import { ContactState } from '../types'
 import PeopleItem from './PeopleItem'
 import { AppDispatch } from '../redux/store'
 import PeopleDetail from './PeopleDetail'
+import EditPerson from './EditPerson'
 
 function PeopleList() {
   const dispatch = useDispatch<AppDispatch>()
   const people = useSelector((state: ContactState) => state.contacts.people)
   const detailView = useSelector((state: ContactState) => state.contacts.detailView)
+  const personSelected = useSelector((state: ContactState) => state.contacts.personSelected)
 
   useEffect(() => {
     dispatch(init())
-  }, [people])
+  }, [])
 
   const renderPeopleList = () => {
     let returnView = <FlatList
@@ -24,6 +26,7 @@ function PeopleList() {
     keyExtractor={(_item, index) => index.toString()}
   />
     if (detailView) returnView = <PeopleDetail />
+    else if (personSelected !== null) returnView = <EditPerson />
 
     return returnView
   }

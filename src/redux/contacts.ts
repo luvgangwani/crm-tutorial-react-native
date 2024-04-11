@@ -19,6 +19,19 @@ export const add = createAsyncThunk('add', async (people: People) => {
     return people
 })
 
+export const edit = createAsyncThunk('edit', async (people: People) => {
+    await fetch(`http://localhost:3000/contact/${people.id}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(people)
+    })
+
+    return people
+})
+
 export const deletePerson = createAsyncThunk('deletePerson', async (id: string) => {
     await fetch(`http://localhost:3000/contact/${id}`, {
         method: 'DELETE',
@@ -82,6 +95,18 @@ export const contactsSlice = createSlice({
 
         builder.addCase(add.rejected, (state) => {
             state.error = true
+        })
+
+        builder.addCase(edit.rejected, (state) => {
+            state.error = true
+        })
+
+        builder.addCase(edit.pending, (state) => {
+            state.isLoading = true
+        })
+
+        builder.addCase(edit.fulfilled, (state, _action) => {
+            state.isLoading = false
         })
 
         builder.addCase(deletePerson.pending, (state) => {

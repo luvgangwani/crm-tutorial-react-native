@@ -52,4 +52,6 @@ export type ContactState = {
 export type RootStackParamList = {
   People: undefined;
   Company: undefined;
+  EditPerson: undefined;
+  PeopleDetail: undefined;
 };

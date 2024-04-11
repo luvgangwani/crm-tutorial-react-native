@@ -12,6 +12,7 @@ function PeopleDetail() {
 
   const resetState = {
     detailView: false,
+    personSelected: null,
     id: '',
     firstName: '',
     lastName: '',
@@ -26,6 +27,13 @@ function PeopleDetail() {
     dispatch(
       update(resetState)
     )
+  }
+
+  const handlePeopleDetailEditPress = () => {
+    dispatch(update({
+      detailView: false,
+      personSelected: contacts.id
+    }))
   }
 
   const handleDeletePeoplePress = () => {
@@ -63,6 +71,9 @@ function PeopleDetail() {
         </View>
         <TouchableOpacity style={styles.close} onPress={ handlePeopleDetailClosePress }>
           <Text style={styles.closeText}>Close</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.edit} onPress={ handlePeopleDetailEditPress }>
+          <Text style={styles.editText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.delete} onPress={ handleDeletePeoplePress }>
           <Text style={styles.deleteText}>Delete</Text>
@@ -111,6 +122,20 @@ const styles = StyleSheet.create({
 
   deleteText: {
     color: '#ff0000',
+    fontSize: 18
+  },
+
+  edit: {
+    borderWidth: 2,
+    borderColor: '#ff00ff',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+
+  editText: {
+    color: '#ff00ff',
     fontSize: 18
   }
 })
