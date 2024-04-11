@@ -39,7 +39,12 @@ function PeopleDetail() {
   const handleDeletePeoplePress = () => {
     if (contacts.id) {
       dispatch(deletePerson(contacts.id))
-      dispatch(update(resetState))
+
+      const updatedContacts = contacts.people.filter((p) => p.id !== contacts.id)
+      dispatch(update({
+        ...resetState,
+        people: updatedContacts
+      }))
     }
   }
 
